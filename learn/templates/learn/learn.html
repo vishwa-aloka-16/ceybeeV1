@@ -1,0 +1,107 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceybee Learn</title>
+    <link rel="stylesheet" href="{% static 'learn/style.css'%}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <nav>
+         <div><h1><img id="logoImg" src="{% static 'learn/img/logoCeybee.png'%}" alt="">ceybee Learn</h1></div>
+        <div class="links">
+            <ul>
+                <li ><a class="active" href="{% url 'main'%}">Home</a></li>
+                <li><a href="{% url 'about'%}">About Us</span></a></li>
+                <li><a href="/learn">Learn</span></a></li>
+                <li><a href="{% url 'service'%}">Services</span></a></li>
+                <li><a href="{% url 'contact'%}">Contact Us</a></li>            
+            </ul>
+        </div>
+        <img id="menuBtn"src="{% static 'learn/img/menu.png'%}">
+    </nav>
+    <div class="menu" id="menu">
+        <div><h1><img id="logoImg" src="{% static 'learn/img/logoCeybee.png'%}" alt="">ceybee Learn</h1></div>
+        <div class="links">
+            <ul>
+                <li ><a class="active" href="{% url 'main'%}">Home</a></li>
+                <li><a href="{% url 'about'%}">About Us</span></a></li>
+                <li><a href="/learn">Learn</span></a></li>
+                <li><a href="{% url 'service'%}">Services</span></a></li>
+                <li><a href="{% url 'contact'%}">Contact Us</a></li>            
+            </ul>
+        </div>
+        <img id="closeBtn"src="{% static '/learn/img/close.png'%}">
+    </div>
+    <div class="blog-container">
+        <div class="blog-headder" >
+            <div class="blog-headder-text-container text-focus-in "><h1>"<k class="yellow">Learn</k>, <k class="yellow">creat </k>, and <k class="yellow">share</k> marketing ideas – simplify your growth!"</h1></div>
+            <div class="blog-headder-buttons-container"><button id="read"><a href="#readMore">START READING</a></button> <button id="join"><a href="{% url 'contact'%}">JOIN US</a></button></div>
+            <div class="blog-headder-tags">
+                <h2 class="simple-description">POPULAR TAGS :</h2>
+                <div class="blog-headder-tags-container">
+                    <ul>
+                        {% for tag in tags %}
+                        
+                            <li><img src="{% static 'media/' %}{{ tag.image }}" alt="{{ tag.name }}"><span>{{tag.name}}</span></li>
+                        
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <h2 class="simple-description">OUR LATEST THREADS :</h2>
+        <div class="blog-new-posts">
+            <div class="blog-newest-post-container">
+                <h1>{{latest_posts.0.title}}</h1>
+                <div class="blog-new-post-container-publishData">
+                    <div><img src="{% static 'learn/img/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.png'%}" alt=""> {{latest_posts.0.author}}</div>
+                    <div><img src="{% static 'learn/img/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.png'%}" alt=""> {{latest_posts.0.date}}</div>
+                </div>
+                <p>{{ latest_posts.0.description|truncatewords:50 }}</p>
+                <button onclick="window.location.href='blog/{{ latest_posts.0.id }}/'">Read More</button>
+            </div>
+            <div class="new-post-short">
+                <ul>
+                {% for latest_post in latest_posts %}
+                {% if latest_post != latest_posts.0 %}
+                    <li>
+                        <div>
+                            <h3>{{latest_post.title}}</h3>
+                            <h4>{{latest_post.date}}</h4>
+                        </div>
+                        <button onclick="window.location.href='blog/{{ latest_post.id }}/'"><img src="{% static 'learn/img/arrow_forward.png'%}" alt=""></button>
+                    </li>
+                {% endif %}
+
+                {% endfor %}                        
+                </ul>
+            </div>
+        </div>
+        <h2 class="simple-description" id="readMore">OUR THREADS :</h2>
+        <div class="post-container">
+        {% for post in featured_posts %}
+            <div class="post" >
+                    <div class="header">{{post.title}}</div>
+                    <div class="footer">
+                        <span id ="postTags">
+                        {% for postTag in post.tags.all %}
+                            <button>{{postTag.name}}</button>
+                        {% endfor %}
+                        </span>
+                        <span id="publishData">
+                            <div><img src="{% static 'learn/img/person_24dp_000000_FILL0_wght400_GRAD0_opsz24.png'%}" alt=""> {{post.author}}</div>
+                            <div><img src="{% static 'learn/img/calendar_month_24dp_000000_FILL0_wght400_GRAD0_opsz24.png'%}" alt=""> {{post.date}}</div>
+                        </span>
+                        <p>{{ latest_posts.0.description|truncatewords:30}}</p>
+                        <button id="read" onclick="window.location.href='blog/{{ post.id }}/'">Read More</button>
+                    </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+<script src="{% static 'learn/script.js'%}"></script>
+</body>
+</html>
